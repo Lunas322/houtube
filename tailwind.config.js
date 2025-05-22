@@ -1,6 +1,9 @@
+// tailwind.config.js
+
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}", // ✅ 올바른 glob 경로
   ],
   theme: {
     extend: {},

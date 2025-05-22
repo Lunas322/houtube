@@ -1,0 +1,150 @@
+.container {
+    width: 100%;
+    height: 58px;
+    background-color: #111111;/*#111111*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.Logo {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    padding-left: 40px;
+    color: white;
+    font-size: 1.3rem;
+}
+
+.YoutubeIcon {
+    color: red;
+    font-size: 3rem;
+    padding-right: 4px;
+}
+
+.ArreyBox {
+    width: 40%;
+    height: 80%;
+    transform: translateX(-27px);
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+
+}
+
+.InputBox {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(37, 37, 37, 0.563);
+    border-radius: 30px;
+    border: 0.4px rgba(52, 52, 52, 0.818) solid;
+}
+
+.SearchBox {
+    width: 90%;
+    display: flex;
+    height: 100%;
+    background-color: none;
+    border: none;
+    padding: 20px;
+    font-size: 20px;
+    outline: none;
+    background-color: rgba(37, 37, 37, 0);
+    border-radius: 30px;
+    color: white;
+}
+
+.KeyIcon {
+    height: 36%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    transform: translateX(-10px);
+    color: white;
+}
+.SearchButton {
+    font-size: 10px;
+    border-radius: 0px 30px 30px 0px;
+    width: 11%;
+    height: 100%;
+    padding: 9px;
+    font-weight: 900;
+    background-color: black;
+    color: white;
+    border: none;
+}
+
+.MicBox {
+    width: 5%;
+    transform: translateX(-20px);
+    margin-top: 1px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    border-radius: 50%;
+    background-color: aquamarine;
+    color: white;
+    background-color: rgba(55, 54, 54, 0.87);
+
+}
+
+.InterFaceBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 230px;
+    transform: translateX(-30px);
+}
+
+.PlusBox {
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(55, 54, 54, 0.87);
+    color: white;
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 45px;
+    height: 46px;
+    font-size: 1.2rem;
+    padding: 4px;
+    font-weight: 400;
+}
+
+.PlusIcon {
+    font-weight: 900;
+    font-size: 30px;
+    padding-right: 3px;
+}
+
+.BellIcon {
+    color: white;
+    width: 39px;
+    padding: 6px;
+    border-radius: 50%;
+    height: 100%;
+    font-size: 2rem;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.UserIcon {
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 36px;
+    border-radius: 50%;
+    background-color: white;
+}
