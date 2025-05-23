@@ -1,0 +1,28 @@
+.container {
+    width: 77%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #111111;/*#111111*/
+
+    flex-direction: column;
+}
+
+.VideoBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px; 
+    margin-top: 60px;
+    flex-direction: column;
+}
+iframe {
+    border-radius: 20px;
+}
+.InterFace {
+    padding: 10px;
+}
+.MainTitle {
+    color: white !important;
+}
