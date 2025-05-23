@@ -5,8 +5,8 @@ import { CiSearch } from "react-icons/ci";
 import { FaMicrophone } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import { FaBell } from "react-icons/fa";
-//css 모듈 사용후 tailwind css로 변경 예정
-//겹치면 컴포넌트로 뺄 수 있으면 빼기   
+//TODO:css 모듈 사용후 tailwind css로 변경 예정
+//TODO:겹치면 컴포넌트로 뺄 수 있으면 빼기   
 function Header () {
     return (
         <>
