@@ -11,6 +11,13 @@
     background-color: #111111;/*#111111*/
 
 }
+.YoutubeImg {
+    display: block;
+    margin: 0;
+    padding: 0;
+    object-fit: cover;
+  }
+  
 
 .YoutubeVideo {
     width: 31%;
@@ -55,4 +62,5 @@
     background-color: white;
     margin-right: 10px;
     border-radius: 50%;
+
 }

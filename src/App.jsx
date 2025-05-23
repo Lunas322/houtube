@@ -1,14 +1,21 @@
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import Header from './components/Header'
 import MainVideos from './components/MainVideos'
+import LayOut from './components/Layout'
+import Detali from './components/Detali'
 
 
 function App() {
 
   return (
   <>
-  <Header/>
-  <MainVideos/>
+    <Routes>
+      <Route path='/' element={<LayOut/>}>
+      <Route index element={<MainVideos/>}/>
+      <Route path='/Detail/:id' element={<Detali/>}/>
+      </Route>
+    </Routes>
+
   </>
   )
 }
