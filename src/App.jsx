@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import MainVideos from './components/MainVideos'
 import LayOut from './components/Layout'
-import Detali from './components/Detali'
+import Detail from './components/Detail'
 
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
     <Routes>
       <Route path='/' element={<LayOut/>}>
       <Route index element={<MainVideos/>}/>
-      <Route path='/Detail/:id' element={<Detali/>}/>
+      <Route path='/Detail/:id' element={<Detail/>}/>
       </Route>
     </Routes>
 

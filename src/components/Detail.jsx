@@ -4,11 +4,11 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import styles from "../css/Detail.module.css"
 
 
 
-
-function Detali () {
+function Detail () {
     const [data, setData] = useState()
     const {id} = useParams()
     const [loading, setLoding] = useState(false)
@@ -43,9 +43,21 @@ function Detali () {
     error === true ? console.log('에러') : console.log('에러 없음ㄴ')
     return(
         <>
-
+        <div className={styles.container}>
+        <div className={styles.VideoBox}>
+        <iframe
+            width="560"
+            height="315"
+            src={`https://www.youtube.com/embed/${id}?autoplay=1`}
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen
+></iframe>
+        </div>
+        <div className={styles.VideosListBox}></div>
+        </div>
         </>
     )
 }
 
-export default Detali
+export default Detail
