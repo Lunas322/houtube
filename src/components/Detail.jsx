@@ -6,7 +6,9 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import styles from "../css/Detail.module.css"
-import { meta } from "eslint-plugin-react-hooks"
+import sub from "../utils/subscriber"
+import { AiOutlineLike } from "react-icons/ai";
+
 
 
 
@@ -18,7 +20,7 @@ function Detail () {
     //api호출때 사용
     const [loading, setLoding] = useState(false)
     const [error, setError] = useState(false)
-    const [ch, setCh] = useState()
+    const [ch, setCh] = useState([])
     //채널 데이터 받을거
     useEffect(()=>{
         async function FetchidData (){
@@ -27,7 +29,7 @@ function Detail () {
                 setLoding(true)
             const response = await axios.get('https://www.googleapis.com/youtube/v3/videos',{
                 params: {
-                    part:'snippet',
+                    part:'snippet,statistics',
                     id: id,
                     key:KEY
                 }
@@ -35,12 +37,13 @@ function Detail () {
             //데이터 저장
             const data = response.data.items
             setData(data)
+        
             //channeldata 요청
             if (data && data.length > 0) {
                 const channeldataid = data[0].snippet.channelId
                 const channeldata = await axios.get('https://www.googleapis.com/youtube/v3/channels',{
                     params: {
-                        part: 'snippet',
+                        part: 'snippet,statistics',
                         id: channeldataid,
                         key: KEY
                     }
@@ -65,6 +68,8 @@ function Detail () {
     console.log('유튜브 영상 데이터',data)
     console.log('유튜브 채널 데이터',ch)
 
+
+
     loading === true ? console.log('로딩중') : console.log('로딩끝')
     error === true ? console.log('에러') : console.log('에러 없음ㄴ')
     return(
@@ -79,12 +84,25 @@ function Detail () {
             allow="autoplay; encrypted-media; fullscreen"
             allowfullscreen
         ></iframe>
+        {ch.length > 0 ? 
         <div className={styles.InterFace}>
-        <h2 className={styles.MainTitle}>  {data?.[0]?.snippet?.title || "로딩 중"}</h2>
+        <h2 className={styles.MainTitle}>  {data[0]?.snippet?.title || "로딩 중"}</h2>
         <div className={styles.DetailBox}>
+        <div className={styles.YoutuberIcon}>
 
+            <img className={styles.ChannelIcon} src={ch[0].snippet.thumbnails.default.url} alt="채널 이미지" />
+            <div className={styles.ChannelText}>
+                <h3 className={styles.ChannelTitle}>{ch[0].snippet.title}</h3>
+                <p className={styles.Sub}>구독자 {sub(ch[0].statistics.subscriberCount)}</p>
+            </div>
+            <div className={styles.Subscriber}>구독</div>
+        </div>
+        <div className={styles.VideoInterFace}>
+            <div className={styles.Likebutton}><AiOutlineLike/></div>
         </div>
         </div>
+        </div>
+            : null}
         </div>
         <div className={styles.VideosListBox}>
         </div>

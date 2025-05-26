@@ -9,7 +9,7 @@
 }
 
 .VideoBox {
-    width: 100%;
+
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -19,10 +19,63 @@
 }
 iframe {
     border-radius: 20px;
+
 }
 .InterFace {
-    padding: 10px;
+    padding-top: 10px;
+    width: 100%;
 }
 .MainTitle {
-    color: white !important;
+    padding-top: 10px;
+    color: white;
+}
+
+.YoutuberIcon {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row;
+
+
+}
+
+.ChannelIcon {
+width: 40px;
+border-radius: 50%;
+margin-right: 15px;
+}
+
+.ChannelTitle {
+    color: white;
+    padding-bottom: 2px;
+}
+.Sub {
+    color: #bbbbbb;
+    font-size: 0.9rem;
+}
+
+.Subscriber {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    margin-left: 18px;
+    border-radius: 30px;
+    font-weight: 700;
+    background-color: white;
+
+}
+
+.Subscriber:hover {
+    background-color: rgb(203, 203, 203);
+}
+
+.DetailBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.VideosinterFace {
+    display: flex;
+    align-items: center;
 }
