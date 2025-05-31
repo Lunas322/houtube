@@ -4,16 +4,18 @@
 
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import styles from "../css/Detail.module.css"
 import sub from "../utils/subscriber"
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
 import { FaShare } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
+import Textlength from "../utils/Textlength"
 
 
 function Detail () {
+    const navigator = useNavigate ()
     const KEY = import.meta.env.VITE_YOUTUBE_API_KEY
     const [data, setData] = useState([])
     //데이터 받을거
@@ -74,7 +76,7 @@ function Detail () {
         }
         FetchidData()
         
-    },[])
+    },[id])
 
 
 
@@ -137,12 +139,20 @@ function Detail () {
             : null}
         </div>
         <div className={styles.VideosListBox}>
-            {channleVideo.length > 0 ? channleVideo.map((a,i)=>{
+        <h2 className={styles.VidoeListLogo}>Channel Video List</h2>
+
+            {channleVideo.length | ch.length > 0 ? channleVideo.map((a,i)=>{
                 return (
                     <>
-                    <div> 
-                        {channleVideo.length > 0 ? <img src={a.snippet.thumbnails.default.url}
-                         alt="" /> : null}
+                    <div className={styles.ChannelVideoBox} onClick={(()=>{navigator(`/Detail/${a.id.videoId}`)})}> 
+                        {console.log('유튜브아이디',a.id.videoId)}
+                        {channleVideo.length > 0 ? <img src={a.snippet.thumbnails.high.url}
+                         alt=""  className={styles.ChannelVideoImg}/> : null}
+                         <div className={styles.ChannelVideoText}>
+                            <p>{Textlength(a.snippet.title)}</p>
+                            <p className={styles.ChannelVideoView}>{ch[0].snippet.title}</p>
+                            <p className={styles.ChannelVideoView}>조회수 {sub(data[0].statistics.viewCount)}</p>
+                         </div>
                     </div>
                     </>
                 )

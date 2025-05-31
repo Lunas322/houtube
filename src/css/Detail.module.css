@@ -2,7 +2,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     background-color: #111111;/*#111111*/
 
     flex-direction: row;
@@ -141,6 +141,45 @@ margin-right: 15px;
 .VideosListBox {
     width: 23%;
     height: auto;
+    color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(60px);
+    border-bottom: 0.1px solid #bbbbbb;
+}
 
-    padding: 20px;
+.ChannelVideoBox {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+}
+.ChannelVideoText {
+    font-size: 1rem;
+    padding: 2px 10px 2px 10px;
+    font-weight: 800;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+}
+
+.ChannelVideoImg {
+    border-radius: 5px;
+    width: 40%;
+}
+
+.VidoeListLogo{
+width: 100%;
+ text-align: center;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+.ChannelVideoView {
+ color: #bbbbbb;
+ margin-top: 4px;
+ font-weight: 500;
+ font-size: 1rem;
 }
