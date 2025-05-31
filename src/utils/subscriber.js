@@ -4,11 +4,11 @@ const sub = function (countStr) {
     if (count >= 10000) {
       const value = count / 10000;
       const formatted = value % 1 === 0 ? value.toFixed(0) : value.toFixed(1);
-      return `${formatted}만 명`;
+      return `${formatted}만명`;
     } else if (count >= 1000) {
       const value = count / 1000;
       const formatted = value % 1 === 0 ? value.toFixed(0) : value.toFixed(1);
-      return `${formatted}천 명`;
+      return `${formatted}천명`;
     } else {
       return `${count}명`;
     }

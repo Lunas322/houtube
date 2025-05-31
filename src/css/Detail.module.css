@@ -1,15 +1,15 @@
 .container {
-    width: 77%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #111111;/*#111111*/
 
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .VideoBox {
-
+    width: 77%;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -19,6 +19,7 @@
 }
 iframe {
     border-radius: 20px;
+    width: 100%;
 
 }
 .InterFace {
@@ -75,7 +76,71 @@ margin-right: 15px;
     align-items: center;
 }
 
-.VideosinterFace {
+.VideoInterFace {
+    display: flex;
+    width: 26%;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.Likebutton {
+    background-color: rgba(62, 61, 61, 0.693);
+    color: white;
+    border-radius: 30px;
+    height: 40px;
     display: flex;
     align-items: center;
+    font-size: 1rem;
+    justify-content: center;
+    
+}
+
+.like {
+    font-size: 2rem;
+    margin: 0px 10px 0px 10px;
+}
+.like:hover{
+    color: #bbbbbb;
+}
+
+.VideoIconBox {
+    background-color: rgba(62, 61, 61, 0.693);
+    color: white;
+    padding: 10px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    font-size: 1.3rem;
+    
+}
+.VideoIcon {
+    margin-right: 10px;
+}
+.VideoText {
+    font-size: 1.2rem;
+    width: 100%;
+    font-weight: 600;
+    background-color: #484747;
+    height: auto;
+    margin-top: 30px;
+    border-radius: 10px;
+    padding: 20px;
+    color: white
+}
+
+.VideoTextHeader {
+    margin-bottom: 10px;
+}
+.VideoMainText {
+    line-height: 28px;
+}
+
+.VideosListBox {
+    width: 23%;
+    height: auto;
+
+    padding: 20px;
 }

@@ -8,8 +8,9 @@ import { useParams } from "react-router-dom"
 import styles from "../css/Detail.module.css"
 import sub from "../utils/subscriber"
 import { AiOutlineLike } from "react-icons/ai";
-
-
+import { AiOutlineDislike } from "react-icons/ai";
+import { FaShare } from "react-icons/fa";
+import { FaBookmark } from "react-icons/fa";
 
 
 function Detail () {
@@ -21,6 +22,7 @@ function Detail () {
     const [loading, setLoding] = useState(false)
     const [error, setError] = useState(false)
     const [ch, setCh] = useState([])
+    const [channleVideo, setchannelVideo] = useState([])
     //채널 데이터 받을거
     useEffect(()=>{
         async function FetchidData (){
@@ -48,7 +50,18 @@ function Detail () {
                         key: KEY
                     }
                 })
+                const channelVideos = await axios.get('https://www.googleapis.com/youtube/v3/search',{
+                    params: {
+                        part: 'snippet',
+                        channelId: channeldataid,
+                        maxResults: 5,
+                        key: KEY,
+                        type: 'video',
+                        videoDuration: 'medium'
+                    }
+                })
                 setCh(channeldata.data.items)
+                setchannelVideo(channelVideos.data.items)
             }
             } catch(error){
                 console.error('에러가 발생했습니다', error)
@@ -67,6 +80,7 @@ function Detail () {
 
     console.log('유튜브 영상 데이터',data)
     console.log('유튜브 채널 데이터',ch)
+    console.log('유튜브 채널 영상데이터',channleVideo)
 
 
 
@@ -98,13 +112,41 @@ function Detail () {
             <div className={styles.Subscriber}>구독</div>
         </div>
         <div className={styles.VideoInterFace}>
-            <div className={styles.Likebutton}><AiOutlineLike/></div>
+            <div className={styles.Likebutton}>
+                <AiOutlineLike className={styles.like}/>{sub(data[0].statistics.likeCount)}  | <AiOutlineDislike className={styles.like}/>{data[0].statistics.dislikeCount == null ? null :data[0].statistics.dislikeCount}
+            </div>
+            <div className={styles.VideoIconBox}>
+                <FaShare className={styles.VideoIcon}/>공유
+            </div>
+            <div className={styles.VideoIconBox}>
+                <FaBookmark className={styles.VideoIcon}/>저장
+            </div>
         </div>
+        </div>
+        <div className={styles.VideoText}>
+            <div className={styles.VideoTextHeader}>
+            조회수 {sub(data[0].statistics.viewCount)} {data[0].snippet.publishedAt.slice(0, 10)
+            }
+            </div>
+            <div className={styles.VideoMainText}>
+            {data[0].snippet.description}
+            </div>
+        
         </div>
         </div>
             : null}
         </div>
         <div className={styles.VideosListBox}>
+            {channleVideo.length > 0 ? channleVideo.map((a,i)=>{
+                return (
+                    <>
+                    <div> 
+                        {channleVideo.length > 0 ? <img src={a.snippet.thumbnails.default.url}
+                         alt="" /> : null}
+                    </div>
+                    </>
+                )
+            }) : null}
         </div>
         </div>
         </>
