@@ -1,24 +1,37 @@
 import styles from "../css/MainVideos.module.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { GET_YOUTUBE_LIST } from "../api/YouTube";
+import { GET_YOUTUBE_CHANNEL, GET_YOUTUBE_LIST } from "../api/YouTube";
 //TODO:map도 컴포넌트로 빼기
-//채널 사진을 중첩 맵으로 사용하면 되지 않을까?
+//채널 사진을 중첩 맵으로 사용하면 되지 않을까
 function MainVideos() {
   const [data, setData] = useState([]);
   const KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
   const navigator = useNavigate();
   useEffect(() => {
-    async function fatchData() {
+    async function FeatchData() {
       try {
-        const GET_Y_DATA_LIST = await GET_YOUTUBE_LIST(KEY);
-        setData(GET_Y_DATA_LIST);
-        console.log(data);
+        const GET_Y_DATA = await GET_YOUTUBE_LIST(KEY);
+
+        const GET_Y_CHANNEL_DATA = await Promise.all(
+          GET_Y_DATA.map(async (video) => {
+            const ChannelId = video.snippet.channelId;
+            const GET_Y_CHANNEL_IMG = await GET_YOUTUBE_CHANNEL(ChannelId, KEY);
+            const Channel = GET_Y_CHANNEL_IMG[0];
+            const URL = Channel?.snippet?.thumbnails?.default?.url || "";
+            return {
+              ...video,
+              ChannleImg: URL,
+            };
+          })
+        );
+        setData(GET_Y_CHANNEL_DATA);
+        console.log(GET_Y_CHANNEL_DATA);
       } catch (error) {
-        console.error("에러", error);
+        console.error("에러가 발생했습니다 에러명 : ", error);
       }
     }
-    fatchData();
+    FeatchData();
   }, []);
   return (
     <>
@@ -40,7 +53,11 @@ function MainVideos() {
                   height={"380px"}
                 />
                 <div className={styles.InterFaceBox}>
-                  <div className={styles.ChannelPhoto}></div>
+                  <img
+                    className={styles.ChannelPhoto}
+                    src={video.ChannleImg}
+                    alt="채널의 아이콘 이미지"
+                  />
                   <div className={styles.Info}>
                     <p className={styles.MainTitle}>{video.snippet.title}</p>
                     <p className={styles.channelName}>

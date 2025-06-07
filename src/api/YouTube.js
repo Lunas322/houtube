@@ -16,7 +16,7 @@ export const GET_YOUTUBE_DATA = async (id, KEY) => {
 export const GET_YOUTUBE_LIST = async (KEY) => {
   const response = await axios.get(`${BASE_URL}/videos`, {
     params: {
-      part: "snippet",
+      part: "snippet,statistics",
       key: KEY,
       maxResults: 42,
       chart: "mostPopular",
@@ -37,11 +37,11 @@ export const GET_YOUTUBE_CHANNEL = async (channelID, KEY) => {
   return response.data.items;
 };
 // 채널의 영상 리스트 API
-export const GET_YOUTUBE_CHANNEL_VIDEOS = async (channelID, KEY) => {
+export const GET_YOUTUBE_CHANNEL_VIDEOS = async (channelName, KEY) => {
   const response = await axios.get(`${BASE_URL}/search`, {
     params: {
       part: "snippet",
-      channelid: channelID,
+      q: channelName,
       key: KEY,
       maxResults: 5,
       type: "video",
