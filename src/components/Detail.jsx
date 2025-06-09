@@ -2,8 +2,6 @@
 //TODO:APi 영상 저장후 출력? 비효율적이지 않나? 일단 해보고 리팩토링 ㄱㄱ
 //TODO:APi 디렉토리로 빼기
 //TODO:패치 줄이기 파일 한 파일에 함수 몰기 axios create 보기 독립적인 함수제작 연관되어 만들지 않기 좋지않음
-
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "../css/Detail.module.css";
@@ -13,6 +11,7 @@ import { AiOutlineDislike } from "react-icons/ai";
 import { FaShare } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import Textlength from "../utils/Textlength";
+
 import {
   GET_YOUTUBE_CHANNEL,
   GET_YOUTUBE_CHANNEL_VIDEOS,
@@ -41,7 +40,7 @@ function Detail() {
           const channelID = GET_Y_DATA[0].snippet.channelId;
           const GET_Y_CHANNEL = await GET_YOUTUBE_CHANNEL(channelID, KEY);
           const GET_Y_CHANNEL_VIDEO = await GET_YOUTUBE_CHANNEL_VIDEOS(
-            channelID,
+            GET_Y_CHANNEL[0].snippet.title,
             KEY
           );
           setCh(GET_Y_CHANNEL);
