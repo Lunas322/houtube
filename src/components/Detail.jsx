@@ -2,6 +2,7 @@
 //TODO:APi 영상 저장후 출력? 비효율적이지 않나? 일단 해보고 리팩토링 ㄱㄱ
 //TODO:APi 디렉토리로 빼기
 //TODO:패치 줄이기 파일 한 파일에 함수 몰기 axios create 보기 독립적인 함수제작 연관되어 만들지 않기 좋지않음
+//TODO:각 영상리스트가 조회수가 디테일 페이지 조회수랑 같이 떠버림 이거 수정하셈
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "../css/Detail.module.css";
@@ -11,7 +12,7 @@ import { AiOutlineDislike } from "react-icons/ai";
 import { FaShare } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import Textlength from "../utils/Textlength";
-
+// 호출 횟수 3회 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
 import {
   GET_YOUTUBE_CHANNEL,
   GET_YOUTUBE_CHANNEL_VIDEOS,
@@ -57,6 +58,10 @@ function Detail() {
     }
     FatchData();
   }, [id]);
+
+  console.log("채널", ch);
+  console.log("데이터 디테일", data);
+  console.log("채널비디오", channleVideo);
 
   loading === true ? console.log("로딩중") : console.log("로딩끝");
   error === true ? console.log("에러") : console.log("에러 없음ㄴ");
@@ -127,29 +132,29 @@ function Detail() {
           ) : null}
         </div>
         <div className={styles.VideosListBox}>
-          <h2 className={styles.VidoeListLogo}>Channel Video List</h2>
+          <h2 className={styles.VidoeListLogo}>Video List</h2>
 
           {channleVideo.length | (ch.length > 0)
-            ? channleVideo.map((a, i) => {
+            ? channleVideo.map((video, i) => {
                 return (
                   <div
                     key={i}
                     className={styles.ChannelVideoBox}
                     onClick={() => {
-                      navigator(`/Detail/${a.id.videoId}`);
+                      navigator(`/Detail/${video.id.videoId}`);
                     }}
                   >
                     {channleVideo.length > 0 ? (
                       <img
-                        src={a.snippet.thumbnails.high.url}
+                        src={video.snippet.thumbnails.high.url}
                         alt=""
                         className={styles.ChannelVideoImg}
                       />
                     ) : null}
                     <div className={styles.ChannelVideoText}>
-                      <p>{Textlength(a.snippet.title)}</p>
+                      <p>{Textlength(video.snippet.title)}</p>
                       <p className={styles.ChannelVideoView}>
-                        {ch[0].snippet.title}
+                        {video.snippet.channelTitle}
                       </p>
                       <p className={styles.ChannelVideoView}>
                         조회수 {sub(data[0].statistics.viewCount)}

@@ -162,6 +162,7 @@ iframe {
 .ChannelVideoImg {
   border-radius: 5px;
   width: 40%;
+  height: 120px;
 }
 
 .VidoeListLogo {
@@ -177,4 +178,9 @@ iframe {
   margin-top: 4px;
   font-weight: 500;
   font-size: 1rem;
+}
+
+.ChannelVideoBox:hover {
+  background-color: #484747;
+  border-radius: 10px;
 }

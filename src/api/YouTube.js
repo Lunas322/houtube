@@ -43,9 +43,20 @@ export const GET_YOUTUBE_CHANNEL_VIDEOS = async (channelName, KEY) => {
       part: "snippet",
       q: channelName,
       key: KEY,
-      maxResults: 5,
+      maxResults: 7,
       type: "video",
       videoDuration: "medium",
+    },
+  });
+  return response.data.items;
+};
+
+export const GET_YOUTUBE_VIDEO_VIEW = async (id, KEY) => {
+  const response = await axios.get(`${BASE_URL}/videos`, {
+    params: {
+      part: "statistics",
+      id,
+      key: KEY,
     },
   });
   return response.data.items;
