@@ -3,6 +3,7 @@
 //TODO:APi 디렉토리로 빼기
 //TODO:패치 줄이기 파일 한 파일에 함수 몰기 axios create 보기 독립적인 함수제작 연관되어 만들지 않기 좋지않음
 //TODO:각 영상리스트가 조회수가 디테일 페이지 조회수랑 같이 떠버림 이거 수정하셈
+//TODO:detail page의 view count는 각각 videos의 id 를 join으로 묶어서 ,로 한꺼번에 요청을 보내고 api를 새로 만들어서 호출하는게 나은거 같다
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "../css/Detail.module.css";

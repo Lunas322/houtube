@@ -20,6 +20,7 @@
 .YoutubeVideo {
   width: 31%;
   height: 20%;
+  padding: 10px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -60,4 +61,9 @@
   background-color: white;
   margin-right: 10px;
   border-radius: 50%;
+}
+
+.YoutubeVideo:hover {
+  background-color: #484747;
+  border-radius: 10px;
 }
