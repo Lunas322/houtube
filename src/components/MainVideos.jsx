@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { GET_YOUTUBE_CHANNEL, GET_YOUTUBE_LIST } from "../api/YouTube";
 //TODO:map도 컴포넌트로 빼기
 //채널 사진을 중첩 맵으로 사용하면 되지 않을까
+//TODO:끝까지 내리면 다시 추가로 로딩이 되도록 제작
 function MainVideos() {
   const [data, setData] = useState([]);
   const KEY = import.meta.env.VITE_YOUTUBE_API_KEY;

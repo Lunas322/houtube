@@ -49,6 +49,7 @@ useEffect(() => {
             };
           })
         );
+        console.log("123");
         setdata(GET_Y_CHANNEL_DATA);
       }
     } catch (error) {
@@ -56,4 +57,4 @@ useEffect(() => {
     }
   }
   Featchdata();
-}, [id]);
+}, []);
