@@ -18,6 +18,7 @@ import {
   GET_YOUTUBE_CHANNEL,
   GET_YOUTUBE_CHANNEL_VIDEOS,
   GET_YOUTUBE_DATA,
+  GET_YOUTUBE_VIDEO_VIEW,
 } from "../api/YouTube";
 
 function Detail() {
@@ -29,38 +30,59 @@ function Detail() {
   //api호출때 사용
   const [loading, setLoding] = useState(false);
   const [error, setError] = useState(false);
-  const [ch, setCh] = useState([]);
+  const [channel, setChannel] = useState([]);
   const [channleVideo, setchannelVideo] = useState([]);
 
   useEffect(() => {
-    async function FatchData() {
+    async function FeatchData() {
       try {
         setLoding(true);
         const GET_Y_DATA = await GET_YOUTUBE_DATA(id, KEY);
         setData(GET_Y_DATA);
         if (GET_Y_DATA && GET_Y_DATA.length > 0) {
           const channelID = GET_Y_DATA[0].snippet.channelId;
-          const GET_Y_CHANNEL = await GET_YOUTUBE_CHANNEL(channelID, KEY);
-          const GET_Y_CHANNEL_VIDEO = await GET_YOUTUBE_CHANNEL_VIDEOS(
-            GET_Y_CHANNEL[0].snippet.title,
-            KEY
-          );
-          setCh(GET_Y_CHANNEL);
-          setchannelVideo(GET_Y_CHANNEL_VIDEO);
+
+          const [Channel, ChannelVideo] = await Promise.all([
+            GET_YOUTUBE_CHANNEL(channelID, KEY),
+            GET_YOUTUBE_CHANNEL_VIDEOS(
+              `${GET_Y_DATA[0].snippet.channelTitle},의 영상`,
+              KEY
+            ),
+          ]);
+          setChannel(Channel);
+          console.log(channleVideo);
+          const ids = ChannelVideo.map((videos) => videos.id.videoId)
+            .filter(Boolean)
+            .join(",");
+          console.log(ids);
+          if (!ids) {
+          }
+          const GET_STAT = await GET_YOUTUBE_VIDEO_VIEW(ids, KEY);
+          console.log("GET_STAT length:", GET_STAT.length);
+          console.log("ChannelVideo length:", ChannelVideo.length);
+          const ADD_Y_VIEW = ChannelVideo.map((video, i) => {
+            if (i < GET_STAT.length) {
+              return {
+                ...video,
+                ViewCount: GET_STAT[i].statistics.viewCount,
+              };
+            }
+          });
+          setchannelVideo(ADD_Y_VIEW);
         }
       } catch (error) {
-        console.error("API호출 에러", error);
-        setLoding(false);
         setError(true);
+        console.error("에러가 발생했습니다", error);
       } finally {
         setLoding(false);
-        console.log("API호출 완료");
+        setError(false);
+        console.log("데이터 featching 완료");
       }
     }
-    FatchData();
+    FeatchData();
   }, [id]);
 
-  console.log("채널", ch);
+  console.log("채널", channel);
   console.log("데이터 디테일", data);
   console.log("채널비디오", channleVideo);
 
@@ -78,25 +100,24 @@ function Detail() {
             allow="autoplay; encrypted-media; fullscreen"
             allowfullscreen
           ></iframe>
-          {ch.length > 0 ? (
+          {channel.length > 0 ? (
             <div className={styles.InterFace}>
               <h2 className={styles.MainTitle}>
-                {" "}
                 {data[0]?.snippet?.title || "로딩 중"}
               </h2>
               <div className={styles.DetailBox}>
                 <div className={styles.YoutuberIcon}>
                   <img
                     className={styles.ChannelIcon}
-                    src={ch[0].snippet.thumbnails.default.url}
+                    src={channel[0].snippet.thumbnails.default.url}
                     alt="채널 이미지"
                   />
                   <div className={styles.ChannelText}>
                     <h3 className={styles.ChannelTitle}>
-                      {ch[0].snippet.title}
+                      {channel[0].snippet.title}
                     </h3>
                     <p className={styles.Sub}>
-                      구독자 {sub(ch[0].statistics.subscriberCount)}
+                      구독자 {sub(channel[0].statistics.subscriberCount)}
                     </p>
                   </div>
                   <div className={styles.Subscriber}>구독</div>
@@ -104,7 +125,7 @@ function Detail() {
                 <div className={styles.VideoInterFace}>
                   <div className={styles.Likebutton}>
                     <AiOutlineLike className={styles.like} />
-                    {sub(data[0].statistics.likeCount)} |{" "}
+                    {sub(data[0].statistics.likeCount)}
                     <AiOutlineDislike className={styles.like} />
                     {data[0].statistics.dislikeCount == null
                       ? null
@@ -135,7 +156,7 @@ function Detail() {
         <div className={styles.VideosListBox}>
           <h2 className={styles.VidoeListLogo}>Video List</h2>
 
-          {channleVideo.length | (ch.length > 0)
+          {channleVideo.length | (channel.length > 0)
             ? channleVideo.map((video, i) => {
                 return (
                   <div
@@ -158,7 +179,7 @@ function Detail() {
                         {video.snippet.channelTitle}
                       </p>
                       <p className={styles.ChannelVideoView}>
-                        조회수 {sub(data[0].statistics.viewCount)}
+                        조회수 {sub(channleVideo[i].ViewCount)}
                       </p>
                     </div>
                   </div>

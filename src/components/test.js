@@ -1,60 +1,66 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   GET_YOUTUBE_CHANNEL,
   GET_YOUTUBE_CHANNEL_VIDEOS,
   GET_YOUTUBE_DATA,
   GET_YOUTUBE_VIDEO_VIEW,
 } from "../api/YouTube";
+import axios from "axios";
 
-const [data, setdata] = useState([]);
+const navigator = useNavigate();
 const KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
-// 호출 횟수 22회 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+const [data, setData] = useState([]);
+//데이터 받을거
+const { id } = useParams();
+//api호출때 사용
+const [loading, setLoding] = useState(false);
+const [error, setError] = useState(false);
+const [ch, setCh] = useState([]);
+const [channleVideo, setchannelVideo] = useState([]);
+
 useEffect(() => {
-  async function Featchdata() {
+  async function FeatchData() {
     try {
-      const GET_Y_DATA = await GET_YOUTUBE_DATA(KEY);
+      setLoding(true);
+      const GET_Y_DATA = await GET_YOUTUBE_DATA(id, KEY);
+      setData(GET_Y_DATA);
+      if (GET_Y_DATA && GET_Y_DATA.lengtb > 0) {
+        const channelID = GET_Y_DATA[0].snippet.channelId;
 
-      if (GET_Y_DATA && GET_Y_DATA > 0) {
-        const GET_Y_CHANNEL_DATA = await Promise.all(
-          GET_Y_DATA.map(async (video) => {
-            const channelID = video.snippet.channelId;
+        const [Channel, ChannelVideo] = await Promise.all([
+          GET_YOUTUBE_CHANNEL(channelID, KEY),
+          GET_YOUTUBE_CHANNEL_VIDEOS(GET_Y_DATA.snippet.channelTitle, KEY),
+        ]);
+        setCh(Channel);
 
-            const GET_Y_CHANNEL = await GET_YOUTUBE_CHANNEL(channelID, KEY);
-            const IMG = GET_Y_CHANNEL[0].snippet.thumbnails.default.url;
-            const ChannelTitle = GET_Y_CHANNEL[0].snippet.title;
-            const Subscriber = GET_Y_CHANNEL[0].statistics.subscriberCount;
-            const GET_Y_VIDEO_LIST = await GET_YOUTUBE_CHANNEL_VIDEOS(
-              GET_Y_CHANNEL[0].snippet.title,
-              KEY
-            );
-            const ADD_Y_VIDEO_LIST_VIEW = await Promise.all(
-              GET_Y_VIDEO_LIST.map(async (chvideo) => {
-                const VIDEO_LIST_ID = chvideo.snippet.id;
-                const GET_VIEW = await GET_YOUTUBE_VIDEO_VIEW(
-                  VIDEO_LIST_ID,
-                  KEY
-                );
-                return {
-                  ...chvideo,
-                  view: GET_VIEW.statistics.viewCount,
-                };
-              })
-            );
-            return {
-              ...video,
-              channelIMG: IMG,
-              channelTitle: ChannelTitle,
-              sub: Subscriber,
-              VIDEOLIST: ADD_Y_VIDEO_LIST_VIEW,
-            };
-          })
-        );
-        console.log("123");
-        setdata(GET_Y_CHANNEL_DATA);
+        const ids = ChannelVideo.map((videos) => videos.snippet.id)
+          .filter(Boolean)
+          .join(",");
+        if (!ids) {
+          console.log("아이디가 들어있지 않습니다");
+          return;
+        }
+        const GET_STAT = await GET_YOUTUBE_VIDEO_VIEW(ids, KEY);
+        const STAT_MAP = {};
+        if (GET_STAT?.items && Array.isArray(GET_STAT.items)) {
+          GET_STAT.items.forEach((items) => {
+            STAT_MAP[items.id] = items.statistics.viewCount;
+          });
+        }
+        const ADD_Y_VIEW = ChannelVideo.map((videos) => ({
+          ...videos,
+          ViewCount: STAT_MAP[videos.snippet.id],
+        }));
+        setchannelVideo(ADD_Y_VIEW);
       }
     } catch (error) {
-      console.error("에러가 발생했습니다 에러명 : ", error);
+      setError(true);
+      console.error("에러가 발생했습니다", error);
+    } finally {
+      setLoding(false);
+      setError(false);
+      console.log("데이터 featching 완료");
     }
   }
-  Featchdata();
-}, []);
+  FeatchData();
+}, [id]);
